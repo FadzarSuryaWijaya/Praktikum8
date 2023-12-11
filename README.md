@@ -74,83 +74,104 @@ variabel *lanjut* kita gunakan untuk menginput perintah yang akan kita proses `l
         `salah()`
 * **Kode Program**  
 ```python 
-data={} 
-import os
-class data_mahasiswa():
-    def tambah():
-        print(f"{'Tambah Data':^17}")
-        print('='*17)
-        nim = str(input('NIM\t\t: '))
-        nama = str(input('Nama\t\t: '))
-        uts = int(input('Nilai UTS\t: '))
-        uas = int(input('Nilai UAS\t: '))
-        tugas = int(input('Nilai Tugas\t: '))
-        akhir = round(float((tugas*0.3)+(uts*0.35)+(uas*0.35)),2)
-        data[nama]=nim, uts, uas, tugas, akhir
-    def tampilkan():
-        print(f"{'Daftar Data Mahasiswa':^82}")
-        print('='*84)
-        print(f"|{'NO':^4}|{'NIM':^20}|{'NAMA':^20}|{'TUGAS':^10}|{'UTS':^6}|{'UAS':^6}|{'AKHIR':^10}|")
-        print('='*84)
-        n = 0
-        for a in data.items():
-            n += 1
-            print("|{no:^4}|{0:^20}|{1:^20}|{2:^10}|{3:^6}|{4:^6}|{5:^10}|"
-            .format(a[1][0], a[0][:13], a[1][1], a[1][2], a[1][3], a[1][4], no = n))
-        print('='*84)
+class mahasiswa():
+    def __init__(self):
+        self.nama = []
+        self.nim = []
+        self.uts = []
+        self.uas = []
+        self.tugas = []
 
-    def hapus(nama):
-        print(f"{'Data Berhasil di Hapus':^17}")
-        print('='*17)
-        del data[nama]
 
-    def ubah(nama):
-        print(f"{'Ubah Data':^17}")
-        print('='*17)
-        nim = str(input('NIM\t\t: ')) 
-        uts = int(input('Nilai UTS\t: '))
-        uas = int(input('Nilai UAS\t: '))
-        tugas = int(input('Nilai Tugas\t: '))
-        akhir = round(float((tugas*0.3)+(uts*0.35)+(uas*0.35)),2)
-        data[nama] = nim, uts, uas, tugas, akhir
+    # Menambahkan data inputan 
+    def tambah(self):
+        print("Tambah data\n")
+        nama    = input("Nama           : ")
+        self.nama.append(nama)
+        nim     = int(input("NIM            : "))
+        self.nim.append(nim)
+        uts     = int(input("Nilai UTS      : "))
+        self.uts.append(uts)
+        uas     = int(input("Nilai UAS      : "))
+        self.uas.append(uas)
+        tugas   = int(input("Nilai Tugas    : "))
+        self.tugas.append(tugas)
 
-    def salah():
-        print(f"{'Daftar Data Mahasiswa':^82}")
-        print('='*84)
-        print(f"|{'NO':^4}|{'NIM':^20}|{'NAMA':^20}|{'TUGAS':^10}|{'UTS':^6}|{'UAS':^6}|{'AKHIR':^10}|")
-        print('='*84)
-        print(F"|{'Tidak ada data':^82}|")
-        print('='*84)
-while True:
+
+    # Menampilkan seluruh data 
+    def lihat(self):
+        for i in range(len(self.nama)):
+            print(f"\nData ke -{i+1}")
+            print(f"Nama Mahasiswa: {self.nama[i]}")
+            print(f"NIM Mahasiswa : {self.nim[i]}")
+            print(f"Nilai UTS     : {self.uts[i]}")
+            print(f"Nilai UAS     : {self.uas[i]}")
+            print(f"Nilai TUGAS   : {self.tugas[i]}")
+                
+        # Menghapus inputan nama
+    def hapus(self, nama):
+        print("Hapus data inputan")
+        nama = (input("\nMasukan Nama berdasarkan inputan : "))
+        if nama in self.nama:
+            print("Data {0} berhasil di hapus".format(nama))
+            index = self.nama.index(nama)
+            del self.nama[index]
+            del self.nim[index]
+            del self.uts[index]
+            del self.uas[index]
+            del self.tugas[index]
+        else:
+            print("NAMA {0} TIDAK ADA!".format(nama))
+    
+        # Mengubah data nama inputan
+    def ubah(self, nama):
+        nama = input("Nama yang ingin di ubah : ")
+        if nama in self.nama:
+            index = self.nama.index(nama)
+            self.nim[index]     = int(input("NIM            : "))
+            self.uts[index]     = int(input("Nilai UTS      : "))
+            self.uas[index]     = int(input("Nilai UAS      : "))
+            self.tugas[index]   = int(input("Nilai Tugas    : "))
+
+            print("\nData {0} berhasil di ubah".format(nama))
+        else:
+            print("NAMA {0} TIDAK ADA!".format(nama))
+
+
+print("="*20)
+print("|PROGRAM INPUT DATA|")
+print("="*20)
+
+data = mahasiswa()
+
+while True: 
     print()
-    lanjut = str(input('MENU\n=======\n(L)ihat\n(T)ambah\n(U)bah\n(H)apus\n(K)eluar\n=======\nPilihan : '))
-    os.system("cls")
-    if lanjut.lower() == 'l':
-        if data.items():
-            data_mahasiswa.tampilkan()
+    menu = input("[(T)ambah, (L)ihat, (H)apus, (U)bah, (K)eluar] : ")
+    print("~"*78)
+    print()
+
+    if menu.lower() == 't':
+        data.tambah()
+
+    elif menu.lower() == 'l':
+        if data.nama:
+            data.lihat()
         else:
-            data_mahasiswa.salah()
-    elif lanjut.lower() == 't':
-            data_mahasiswa.tambah()
-    elif lanjut.lower() == 'h':
-        print('Data yang ingin di hapus')
-        nama = str(input('Nama\t\t: '))
-        if nama in data.keys():
-            data_mahasiswa.hapus(nama)
-        else:
-            data_mahasiswa.salah()
-    elif lanjut.lower() == 'u':
-        print('Data yang ingin di ubah')
-        nama = str(input('Nama\t\t: '))
-        if nama in data.keys():
-            data_mahasiswa.ubah(nama)
-        else:
-            data_mahasiswa.salah()
-    elif lanjut.lower() == 'k':
+            print("BELUM ADA DATA!, pilih [T/t] untuk menambah data")       
+
+    elif menu.lower() == "h":
+        data.hapus(data.nama)
+
+
+    elif menu.lower() == "u":
+        data.ubah(data.nama) 
+
+    elif menu.lower() == "k":
+        print("Program selesai, Terima Kasih :) ")
         break
-    else :
-        print('Pilih menu yang tersedia')
-print('Program Selesai') 
+
+    else:
+        print("\n INPUT {} TIDAK ADA!, Silakan pilih [T/L/H/U/K] untuk menjalankan program!".format(menu))
 ```
 * **Hasil Program**
     ![img](Gambar/1.png)
