@@ -18,7 +18,7 @@ $${\color{lightblue}PYTHON}$$
 ![img](Gambar/2.png)
 
 * **Flowchart**
-![img](Gambar/Flowchart.png)
+![img](Gambar/3.png)
 
 ### **Penjelasan dan kode Programnya**   
 Program kita kali ini akan menggunakan sistem OOP(Object-Oriented Programming), apa itu OOP?
